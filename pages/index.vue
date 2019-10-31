@@ -103,6 +103,11 @@
             },
             counts() {
                 this.fillDataCollection();
+            },
+            counterCards() {
+                if (this.counterCards.length === 0) {
+                    this.counterNumber = 1;
+                }
             }
         }
     }
