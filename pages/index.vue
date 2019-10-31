@@ -89,12 +89,7 @@
               return this.counterNumber++;
             },
             removeCard({identifier}) {
-                console.log(this.counterCards, identifier);
-                this.counterCards = this.counterCards.filter(item => {
-                    console.log(item.id, item.id !== identifier);
-                    return item.id !== identifier;
-                });
-                console.log(this.counterCards);
+                this.counterCards = this.counterCards.filter(item => item.id !== identifier);
             }
         },
         watch: {
