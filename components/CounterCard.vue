@@ -26,12 +26,11 @@
         <v-card-text class="text-center display-1">
             {{countModel}}
         </v-card-text>
-
         <v-card-actions class="d-flex justify-center justify-sm-space-around">
-            <v-btn color="primary" rounded x-large @click="countModel -= stepRange">
+            <v-btn fab color="primary" x-large @click="countModel -= stepRange">
                 -
             </v-btn>
-            <v-btn color="primary" rounded x-large @click="countModel += stepRange">
+            <v-btn fab color="primary" x-large @click="countModel += stepRange">
                 +
             </v-btn>
         </v-card-actions>
