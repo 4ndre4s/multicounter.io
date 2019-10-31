@@ -47,6 +47,9 @@
             },
             count: {
                 required: true
+            },
+            identifier: {
+                required: true
             }
         },
         data() {

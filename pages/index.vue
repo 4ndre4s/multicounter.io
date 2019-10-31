@@ -2,7 +2,7 @@
     <v-container>
         <v-row>
             <v-col v-for="(counterCard, index) of counterCards"
-                   :key="index"
+                   :key="counterCard.id"
                    :cols="12"
                    :lg="3"
                    :md="4"
