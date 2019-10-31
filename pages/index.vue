@@ -8,7 +8,8 @@
                    :md="4"
                    :sm="6"
                    :xs="8">
-                <counter-card :name="counterCard.name" :count="counterCard.count"
+                <counter-card :name="counterCard.name" :count="counterCard.count" :identifier="counterCard.id"
+                              @remove-card="removeCard"
                               @count-changed="(count) => counterCards[index].count = count"
                               @name-changed="(name) => counterCards[index].name = name">
                 </counter-card>
@@ -44,6 +45,7 @@
             return {
                 counterCards: [],
                 dataCollection: null,
+                counterNumber: 1
 
             }
         },
@@ -66,7 +68,7 @@
         },
         methods: {
             addCounterCard() {
-                this.counterCards.push({name: "Counter #" + (this.counterCards.length + 1), count: 0});
+                this.counterCards.push({name: "Counter #" + (this.getAndIncrementCounterNumber()), count: 0, id: Date.now()});
             },
             fillDataCollection() {
                 this.dataCollection = {
@@ -82,6 +84,17 @@
                         data: this.counts
                     }]
                 }
+            },
+            getAndIncrementCounterNumber() {
+              return this.counterNumber++;
+            },
+            removeCard({identifier}) {
+                console.log(this.counterCards, identifier);
+                this.counterCards = this.counterCards.filter(item => {
+                    console.log(item.id, item.id !== identifier);
+                    return item.id !== identifier;
+                });
+                console.log(this.counterCards);
             }
         },
         watch: {
