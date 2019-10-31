@@ -1,4 +1,4 @@
-# multicounter
+# multicounter.io
 
 > Count as much as you want!
 
