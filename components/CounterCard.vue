@@ -41,7 +41,7 @@
             </v-card-actions>
         </v-card>
         <v-overlay :value="overlayVisible" @click.native="overlayVisible = false">
-            <v-color-picker v-model="color" ref="colorPicker" @click.stop></v-color-picker>
+            <v-color-picker v-model="color" mode="hexa" ref="colorPicker" @click.stop></v-color-picker>
             <button @click="overlayVisible = false">Close</button>
         </v-overlay>
     </div>
