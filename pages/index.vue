@@ -10,6 +10,7 @@
                    :xs="8">
                 <counter-card :name="counterCard.name" :count="counterCard.count" :identifier="counterCard.id"
                               @remove-card="removeCard"
+                              @color-changed="changeColor"
                               @count-changed="(count) => counterCards[index].count = count"
                               @name-changed="(name) => counterCards[index].name = name">
                 </counter-card>
@@ -44,7 +45,6 @@
         data() {
             return {
                 counterCards: [],
-                dataCollection: null,
                 counterNumber: 1
 
             }
@@ -64,19 +64,20 @@
                     return [];
                 }
                 return this.counterCards.map(({count}) => count);
-            }
-        },
-        methods: {
-            addCounterCard() {
-                this.counterCards.push({name: "Counter #" + (this.getAndIncrementCounterNumber()), count: 0, id: Date.now()});
             },
-            fillDataCollection() {
-                this.dataCollection = {
+            colors() {
+                if(!this.counterCards) {
+                    return [];
+                }
+                return this.counterCards.map(({color}) => color);
+            },
+            dataCollection() {
+                return {
                     //Data to be represented on x-axis
                     labels: this.labels,
                     datasets: [{
                         label: 'Count',
-                        backgroundColor: '#f8a65a',
+                        backgroundColor: this.colors,
                         pointBackgroundColor: 'white',
                         borderWidth: 1,
                         pointBorderColor: '#249EBF',
@@ -84,21 +85,32 @@
                         data: this.counts
                     }]
                 }
+            }
+        },
+        methods: {
+            addCounterCard() {
+                this.counterCards.push({
+                    name: "Counter #" + (this.getAndIncrementCounterNumber()),
+                    count: 0,
+                    color: '#f8a65a',
+                    id: Date.now()
+                });
+            },
+            changeColor($event) {
+                this.counterCards.forEach((item, index) => {
+                    if (item.id === $event.id) {
+                        this.counterCards[index].color = $event.color;
+                    }
+                });
             },
             getAndIncrementCounterNumber() {
-              return this.counterNumber++;
+                return this.counterNumber++;
             },
             removeCard({identifier}) {
                 this.counterCards = this.counterCards.filter(item => item.id !== identifier);
             }
         },
         watch: {
-            labels() {
-                this.fillDataCollection();
-            },
-            counts() {
-                this.fillDataCollection();
-            },
             counterCards() {
                 if (this.counterCards.length === 0) {
                     this.counterNumber = 1;
