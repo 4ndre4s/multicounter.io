@@ -15,7 +15,7 @@
                         {{nameModel}}
                     </template>
                     <template v-else>
-                        <v-text-field clearable label="Name" v-model="nameModel" style="max-width: 50%;"></v-text-field>
+                        <v-text-field clearable label="Name" @keyup.enter="nameGettingChanged = false" v-model="nameModel" style="max-width: 50%;"></v-text-field>
                     </template>
                     <v-btn icon @click="nameGettingChanged = !nameGettingChanged">
                         <v-icon :small="!nameGettingChanged">
@@ -40,8 +40,8 @@
                 </v-btn>
             </v-card-actions>
         </v-card>
-        <v-overlay :value="overlayVisible">
-            <v-color-picker v-model="color"></v-color-picker>
+        <v-overlay :value="overlayVisible" @click.native="overlayVisible = false">
+            <v-color-picker v-model="color" ref="colorPicker" @click.stop></v-color-picker>
             <button @click="overlayVisible = false">Close</button>
         </v-overlay>
     </div>
@@ -80,6 +80,13 @@
             },
             color() {
                 this.$emit("color-changed", {color: this.color, id: this.identifier});
+            },
+            overlayVisible() {
+                if(!!this.overlayVisible) {
+                    this.$nextTick(() => {
+                        this.$refs.colorPicker.$el.focus();
+                    });
+                }
             }
         }
     }

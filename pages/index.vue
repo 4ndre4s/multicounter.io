@@ -45,7 +45,6 @@
         data() {
             return {
                 counterCards: [],
-                dataCollection: null,
                 counterNumber: 1
 
             }
@@ -65,6 +64,27 @@
                     return [];
                 }
                 return this.counterCards.map(({count}) => count);
+            },
+            colors() {
+                if(!this.counterCards) {
+                    return [];
+                }
+                return this.counterCards.map(({color}) => color);
+            },
+            dataCollection() {
+                return {
+                    //Data to be represented on x-axis
+                    labels: this.labels,
+                    datasets: [{
+                        label: 'Count',
+                        backgroundColor: this.colors,
+                        pointBackgroundColor: 'white',
+                        borderWidth: 1,
+                        pointBorderColor: '#249EBF',
+                        //Data to be represented on y-axis
+                        data: this.counts
+                    }]
+                }
             }
         },
         methods: {
@@ -72,6 +92,7 @@
                 this.counterCards.push({
                     name: "Counter #" + (this.getAndIncrementCounterNumber()),
                     count: 0,
+                    color: '#f8a65a',
                     id: Date.now()
                 });
             },
@@ -80,22 +101,7 @@
                     if (item.id === $event.id) {
                         this.counterCards[index].color = $event.color;
                     }
-                })
-            },
-            fillDataCollection() {
-                this.dataCollection = {
-                    //Data to be represented on x-axis
-                    labels: this.labels,
-                    datasets: [{
-                        label: 'Count',
-                        backgroundColor: '#f8a65a',
-                        pointBackgroundColor: 'white',
-                        borderWidth: 1,
-                        pointBorderColor: '#249EBF',
-                        //Data to be represented on y-axis
-                        data: this.counts
-                    }]
-                }
+                });
             },
             getAndIncrementCounterNumber() {
                 return this.counterNumber++;
@@ -105,12 +111,6 @@
             }
         },
         watch: {
-            labels() {
-                this.fillDataCollection();
-            },
-            counts() {
-                this.fillDataCollection();
-            },
             counterCards() {
                 if (this.counterCards.length === 0) {
                     this.counterNumber = 1;
