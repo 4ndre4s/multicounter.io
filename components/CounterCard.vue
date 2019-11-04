@@ -43,7 +43,7 @@
         </v-card>
         <v-overlay :value="overlayVisible">
             <v-color-picker v-model="color" mode="hexa" ref="colorPicker" @click.self=""></v-color-picker>
-            <v-btn raised color="primary mt-2" @click="overlayVisible = false" :right="true" :absolute="true">Close</v-btn>
+            <v-btn raised color="primary mt-2 mr-n4" @click="overlayVisible = false" :right="true" :absolute="true">Close</v-btn>
         </v-overlay>
     </div>
 </template>
