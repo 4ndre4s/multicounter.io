@@ -15,8 +15,13 @@
                         {{nameModel}}
                     </template>
                     <template v-else>
-                        <v-text-field clearable label="Name" @keyup.enter="nameGettingChanged = false"
-                                      v-model="nameModel" style="max-width: 50%;"></v-text-field>
+                        <v-text-field v-model="nameModel"
+                                      ref="name"
+                                      :autofocus="true"
+                                      clearable label="Name"
+                                      @keyup.enter="nameGettingChanged = false"
+                                      @blur="nameGettingChanged = false"
+                                      style="max-width: 50%;"></v-text-field>
                     </template>
                     <v-btn icon @click="nameGettingChanged = !nameGettingChanged">
                         <v-icon :small="!nameGettingChanged">
@@ -43,7 +48,9 @@
         </v-card>
         <v-overlay :value="overlayVisible">
             <v-color-picker v-model="color" mode="hexa" ref="colorPicker" @click.self=""></v-color-picker>
-            <v-btn raised color="primary mt-2 mr-n4" @click="overlayVisible = false" :right="true" :absolute="true">Close</v-btn>
+            <v-btn raised color="primary mt-2 mr-n4" @click="overlayVisible = false" :right="true" :absolute="true">
+                Close
+            </v-btn>
         </v-overlay>
     </div>
 </template>
