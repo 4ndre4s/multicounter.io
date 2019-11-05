@@ -80,7 +80,7 @@
                         backgroundColor: this.colors,
                         pointBackgroundColor: 'white',
                         borderWidth: 1,
-                        pointBorderColor: '#249EBF',
+                        pointBorderColor: '#e6fffd',
                         //Data to be represented on y-axis
                         data: this.counts
                     }]
@@ -92,7 +92,7 @@
                 this.counterCards.push({
                     name: "Counter #" + (this.getAndIncrementCounterNumber()),
                     count: 0,
-                    color: '#f8a65a',
+                    color: '#e6fffd',
                     id: Date.now()
                 });
             },

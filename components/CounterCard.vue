@@ -1,29 +1,31 @@
 <template>
     <div>
-        <v-card height="250">
+        <v-card height="250" :color="color">
             <v-card-title class="headline d-flex justify-space-around">
                 <div>
-                    <v-btn icon color="warning" @click="countModel = 0">
+                    <v-btn icon color="warning" @click="countModel = 0"
+                           :dark="backgroundColorIsTooDark">
                         <v-icon>mdi-refresh</v-icon>
                     </v-btn>
-                    <v-btn icon @click="overlayVisible = true">
+                    <v-btn icon @click="overlayVisible = true" :dark="backgroundColorIsTooDark">
                         <v-icon>mdi-format-color-fill</v-icon>
                     </v-btn>
                 </div>
                 <div class="d-flex justify-center">
                     <template v-if="!nameGettingChanged">
-                        {{nameModel}}
+                        <v-icon :dark="backgroundColorIsTooDark">{{nameModel}}</v-icon>
                     </template>
                     <template v-else>
                         <v-text-field v-model="nameModel"
                                       ref="name"
+                                      :dark="backgroundColorIsTooDark"
                                       :autofocus="true"
                                       clearable label="Name"
                                       @keyup.enter="nameGettingChanged = false"
                                       @blur="nameGettingChanged = false"
                                       style="max-width: 50%;"></v-text-field>
                     </template>
-                    <v-btn icon @click="nameGettingChanged = !nameGettingChanged">
+                    <v-btn icon @click="nameGettingChanged = !nameGettingChanged" :dark="backgroundColorIsTooDark">
                         <v-icon :small="!nameGettingChanged">
                             {{nameGettingChanged ?
                             "mdi-check-circle-outline" : "mdi-lead-pencil"}}
@@ -34,14 +36,14 @@
                     <v-icon>mdi-close-circle-outline</v-icon>
                 </v-btn>
             </v-card-title>
-            <v-card-text class="text-center display-1">
+            <v-card-text class="text-center display-1" :class="{'white--text': backgroundColorIsTooDark}">
                 {{countModel}}
             </v-card-text>
             <v-card-actions class="d-flex justify-center justify-sm-space-around">
-                <v-btn fab :color="color" x-large @click="countModel -= stepRange" style="font-size: 200%">
+                <v-btn fab color="primary" x-large @click="countModel -= stepRange" style="font-size: 200%">
                     -
                 </v-btn>
-                <v-btn fab :color="color" x-large @click="countModel += stepRange" style="font-size: 200%">
+                <v-btn fab color="primary" x-large @click="countModel += stepRange" style="font-size: 200%">
                     +
                 </v-btn>
             </v-card-actions>
@@ -76,7 +78,12 @@
                 nameModel: this.name,
                 countModel: this.count,
                 overlayVisible: false,
-                color: "#f8a65a"
+                color: "#e6fffd"
+            }
+        },
+        computed: {
+            backgroundColorIsTooDark() {
+                return this.color[1] <= 9;
             }
         },
         watch: {
