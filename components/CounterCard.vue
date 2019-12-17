@@ -78,12 +78,31 @@
                 nameModel: this.name,
                 countModel: this.count,
                 overlayVisible: false,
-                color: "#e6fffd"
+                setColor: null
             }
+        },
+        created() {
+            this.$emit("color-changed", {color: this.color, id: this.identifier});
         },
         computed: {
             backgroundColorIsTooDark() {
-                return this.color[1] <= 9;
+                return this.color.charAt(1) <= 9;
+            },
+            color: {
+                get() {
+                    if (!this.setColor) {
+                        return this.getRandomColor();
+                    }
+                    return this.setColor;
+                },
+                set(newValue) {
+                    this.setColor = newValue;
+                }
+            }
+        },
+        methods: {
+            getRandomColor() {
+                return '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
             }
         },
         watch: {
