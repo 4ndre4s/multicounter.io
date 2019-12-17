@@ -115,6 +115,13 @@
             color() {
                 this.$emit("color-changed", {color: this.color, id: this.identifier});
             },
+            nameGettingChanged(newVal, oldVal) {
+                if (!!newVal) {
+                    this.$nextTick(() => {
+                        this.$refs.name.$refs.input.select();
+                    });
+                }
+            },
             overlayVisible() {
                 if (!!this.overlayVisible) {
                     this.$nextTick(() => {
